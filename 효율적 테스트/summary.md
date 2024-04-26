@@ -1,7 +1,15 @@
-
-
-
-
+# JUnit 주요 함수
+  - assertEquals(A, B): 예상 값 A와 실제 결과 B가 동일한지 검증
+  - assertNotEquals(A, B): 예상 값 A와 실제 결과 B가 동일하지 않은지 검증
+  - assertArrayEquals(A[], B[]): 예상 배열 A와 실제 배열 B 결괏값이 동일한지 검증
+  - assertSame(A, B): 객체 A, B가 동일한지 검증
+  - assertFalse(A): 결과 A가 거짓인지 검증
+  - assertTrue(A): 결과 A가 참인지 검증
+  - assertNull(A): 객체 A가 NULL인지 검증
+  - assertNotNull(A): 객체 A가 NULL이 아닌지 검증
+  - assertTimeout(A, B): 객체 B의 실행이 규정된 시간 A 내에 수행되는지 검증
+  - assertThat()
+  - assertThrows()
 
 # 시스템 성능 측정 (feat.성능 측정 도구 또는 부하 발생 도구)
   - 시스템의 성능 저하를 초래하는 것은 소프트웨어가 될 수도 있고 하드웨어(CPU, 메모리)가 될 수도 있다.
