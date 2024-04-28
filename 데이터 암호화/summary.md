@@ -36,7 +36,7 @@ ResultSet result = sm.executeQuery("select count(*) from members where user='"+u
 String username = request.getParameter("user");
 String password = request.getParameter("password");
 
-<b>PreparedStatement psm = conn.createStatement(SecureQuery);<b>
+PreparedStatement psm = conn.createStatement(SecureQuery);
 String SecureQuery = "select count(*) from members where user=? and password=?";
 
 psm.setString(1, user);
