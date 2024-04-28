@@ -7,3 +7,8 @@
 
 ### 로그인 과정에서 사용되는 SQL 쿼리
 > SELECT * FROM MEMBERS WHERE ID=USER_ID AND PASSWORD = USER_PW;
+- user_id, user_pw 같은 변수가 바로 공격 문자열이 삽입될 수 있는 취약 포인트이다. 사용자가 입력한 값을 담는 공간이기 때문이다.
+- user_id: kim, user_pw: 12345로 로그인을 시도한다 했을 때, 아래와 같은 SQL 쿼리가 실행된다.
+  > select * from members where id='jin' and password='12345';
+  - members 테이블에 where 절을 만족하는 데이터가 한 건 이상 있다면, 서버는 그 결과를 보고 사용자의 로그인을 허락한다.
+  - 해커는 where 절에 사용된 변수에 공격 문자열을 삽입해 <b>where 절이 참이 되게 만들어<b> 서버로 접근한다.
