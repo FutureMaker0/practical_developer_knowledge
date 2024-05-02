@@ -69,6 +69,6 @@
     상황을 정의하고 있는 경우이다. 그렇기 때문에 발생할 경우 프로그램이 종료될 수 있다.
   - 예외는 프로그램 내부에서 비정상적 상황이 생긴 경우 내부에서 처리가 가능한 상황이고, 에러는 프로그램에서 처리가 불가능한 상황을 말한다.
 
-  - <img width="600" alt="스크린샷 2024-05-02 오후 1 30 43" src="https://github.com/FutureMaker0/designPattern_singleton/assets/120623320/1733a2a6-9571-4a26-9098-9e9f895e242a"></br>
+    <img width="600" alt="스크린샷 2024-05-02 오후 1 30 43" src="https://github.com/FutureMaker0/designPattern_singleton/assets/120623320/1733a2a6-9571-4a26-9098-9e9f895e242a"></br>
   출저: https://doyoung.tistory.com/22
 
