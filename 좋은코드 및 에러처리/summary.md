@@ -35,27 +35,27 @@
 ## 예외를 던진다(throw), 예외를 받는다.(catch)
   - throw: 예외사항이 발생하면 이 메서드를 호출한 코드에 Exception을 던진다. 던져서 처리하라고 권한을 넘긴다.
   - catch: 어디선가 던져진 Exception을 갈고리로 잡아 와서 처리할 처리할 준비를 한다.
-  ```java
-  public class MyClass extends MyCustomException {
-      public static void main(String[] args) {
-      
-        try {
-          /*
-          프로그램 동작 로직
-          */
-        } catch (MyCustomExceptionLevel3 e) {
-            System.out.pringln("예외를 잡았으며, 처리해야 합니다. 매우 구체화된 예외 처리입니다.");
-        } catch (MyCustomExceptionLevel2 e) {
-            System.out.pringln("예외를 잡았으며, 처리해야 합니다. 보통 구체화된 예외 처리입니다.");
-        } catch (MyCustomExceptionLevel1 e) {
-            System.out.pringln("예외를 잡았으며, 처리해야 합니다. 덜 구체화된 예외처리입니다.");
-        } finally {
-
+    ```java
+    public class MyClass extends MyCustomException {
+        public static void main(String[] args) {
+        
+          try {
+            /*
+            프로그램 동작 로직
+            */
+          } catch (MyCustomExceptionLevel3 e) {
+              System.out.pringln("예외를 잡았으며, 처리해야 합니다. 매우 구체화된 예외 처리입니다.");
+          } catch (MyCustomExceptionLevel2 e) {
+              System.out.pringln("예외를 잡았으며, 처리해야 합니다. 보통 구체화된 예외 처리입니다.");
+          } catch (MyCustomExceptionLevel1 e) {
+              System.out.pringln("예외를 잡았으며, 처리해야 합니다. 덜 구체화된 예외처리입니다.");
+          } finally {
+  
+          }
         }
+      
       }
-    
-    }
-  ```
+    ```
   - Exception은 if-else 구문과 같이 위에서 아래로 순차적으로 수행되므로 Level3 와 같이 구체화된 예외처리가 가장 상단에 위치하며 아래로 갈수록 상위 부모 개념의 포괄적인
     Exception이 위치하게 된다.
   - 이 순서는 반드시 지켜져야 하는 것이, 포괄적 예외 처리를 위한 throw가 상단에 위치할 경우 예외가 발생했다는 사실만 인지할 뿐 정확히 어떤 예외가 발생했는지 파악하는데 어려움이
