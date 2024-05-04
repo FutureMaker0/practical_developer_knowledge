@@ -112,9 +112,7 @@
            static class Task implements Runnable {
              @Override
              public void run() {
-               /*
                System.out.println(Thread.currentThread().getName() + "번 스레드가 작업 처리를 완료하였습니다.");
-               */
              }
            }
          }
