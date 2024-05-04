@@ -76,19 +76,58 @@
       - 클라이언트 요청이 많아지면 동시 요청 처리를 위해 더 많은 스레드를 생성하게 되는데, 서버 자원의 고려 없이 무한 생산하기 때문에 어느 시점에서 서버 자원이 고갈되면 요청 처리를
         위한 스레드가 부족해질 수 있다. 이렇게 되면 웹 서버에서 일부 작업이 처리되지 못해 대기 큐에서 계속 대기하게 되고, 클라이언트로의 응답 시간이 지연된다.
     - 효율적 작업 처리를 위한 스레드 풀 설정 방법
-      
-    
+      1. WAS 설정 파일 변경
+         : <Executor name="tomcatThreadPool" namePrerix="catalina-exec-" maxThreads="200" minSpareThreads="5" />
+      2. Business Logic 설계를 통한 스레드 풀 설계
+         : 스레드 풀의 갯수, 대기 큐 생성, 스레드 풀 생성, 스레드 풀 종료, 서비스 로직 실행 등의 코드 구현을 통해 Java는 ThreadPoolExecutor를 구현하고 있다.
+         ```java
+         import java.util.concurrent.LinkedBlockingQueue;
+         import java.util.concurrent.ThreadPoolExecutor;
+         import java.util.concurrent.TimeUnit;
+
+         public class ThreadPool {
+
+           public static void main(String[] args) throws Exception {
+
+             // THREAE POOL 갯수 설정
+             int CORE_POOL_SIZE = 5;
+             int MAX_POOL_SIZE = 10;
+             int KEEP_ALIVE_TIME = 10;
+
+             // 대기 queue 생성
+             LinkedBlockQueue<Runnable> queue = new LinkedBlockQueue<>(10);
+
+             // 스레드 풀 생성
+             ThreadPoolExecutor threadPool = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME,
+         TimeUnit.SECONDS, queue);
+
+             // 스레드 풀에 처리할 작업 할당
+             for (int i=0; i<10; i++) {
+               threadPool.execute(new Task());
+             }
+             threadPool.shutdown();
+           }
+  
+           // 스레드가 처리할 작업 정의(클래스 내 내부정의)
+           static class Task implements Runnable {
+             @Override
+             public void run() {
+               /*
+               System.out.println(Thread.currentThread().getName() + "번 스레드가 작업 처리를 완료하였습니다.");
+               */
+             }
+           }
+         }
+         ```
+         - 다수의 작업 요청을 처리하는 애플리케이션을 개발하기 위해서는 대기 큐 사이즈, 최소/최대 작업 스레드 갯수를 적절하게 설정해주는 것이 중요하다.
+         - 대기 큐의 크기는 증가시키고 최소 작업 스레드 갯수를 작게하면, 대기 큐가 가득 차지 않기 때문에 처리하기 위한 스레드 수가 증가하지 않는다. 이 경우 클라이언트 요청이
+           대기 큐에서 오랜 시간 머물게 되어 서버의 응답 시간이 길어지는 문제로 서비스의 질적 하락을 초래할 수 있다.
+         - 스레드 풀을 사용할 때는 예상되는 발생 부하량을 정밀히 예측학고, 예측값에 맞는 적절한 스레드 풀 설정 값을 찾아 셋팅해주는 것이 가장 중요하다.
+
+## DBMS에서의 스레드 풀링
+  - 다수 서비스 또는 클라이언트가 DB에 접근하여 데이터를 다루고자 할 때, 그 수가 많아질 경우 접속 처리를 위한 스레드가 증가하여 오버헤드로 인한 성능저하가 발생하기도 한다.
+  - 이 때 DBMS도 스레드 풀을 통한 처리로, 스레드 오버헤드로 인한 성능 저하를 어느정도 방지할 수 있다.
+  - 다수 애플리케이션이 DBMS 접속을 위해 순서표를 발급받아 대기 큐에서 대기하는데, DB 카테고리에서 사용되는 스레드 풀을 커넥션 풀(Connection Pool)이라고 한다.
+  --> Thread Pool은 콘서트(서버)장 입장을 통제하기 위해 존재하는 컨트롤 타워(스레드 풀) 같은 개념으로 이해하면 좋을 것 같다.
 
 
-
-
-
-
-
-
-
-
-
-
-
-    
