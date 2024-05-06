@@ -49,3 +49,62 @@
     사용하기 때문에 SQL 문장이 변경될 일이 없게 되는 것이다.
   - 이와 같이, SQL Injection 공격에 안전한 시큐어 코딩은 매우 중요하다.
 
+### 대칭 키 알고리즘
+  - 암복호화 알고리즘에 사용하는 암복호화 두 키가 동일하면 '대칭 키 알고리즘'이라고 한다.
+  - DES, 3DES, AES, ARIA, SEED, LEA 등으로 다양하다.
+  - 암호화의 강도를 위해 128비트 이상의 알고리즘 사용을 권장하는데, DES(64비트), 3DES(112비트) 등은 암호화 강도가 약하므로 가급적 사용하지 않는다.
+  - AES(128/192/256), ARIA(128/192/256), SEED(128/256), LEA(128/192/256) 비트로 암호화 지원
+    ```java
+    import java.security.MessageDigest;
+    import java.security.SecureRandom;
+    import java.util.Arrays;
+    import java.util.Base64;
+    import javax.crypto.Chiper;
+    import javax.crypto.spec.IvParameterSpec;
+    import javax.crypto.spec.SecretKeySpec;
+
+    public class AESEncryption {
+
+      private SecretKeySpec secretKey;
+      private byte[] initialVetor;
+
+      // 대칭키 암호화 메서드
+      public String encrypt(String plainText, String secretString) throws Exception {
+
+        // 암호화에 사용할 변수 선언
+        byte[] sha256 = null;
+        byte[] cipherText = null;
+
+        // secretString에 대한 hash value 생성
+        sha256 = MessageDigest.getInstance("SHA-256").digest(secretString.getBytes("UTF-8));
+        // 해시 값을 16바이트(128비트) 배열에 나누어 저장
+        sha256 = Arrays.copyOf(sha256, 16);
+        // 저장된 해시 값을 AES 알고리즘을 이용하여 secret key 생성
+        secretKey = new SecretKeySpec(sha256, "AES");
+
+        // 첫 번째 블록 암호화를 위해 난수(Random) 값을 이용하여 초기화 벡터 생성
+        initialVector = new byte[16];
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.nextBytes(initialvector);
+
+        /* 암호화 객체 생성
+        * 암호화 알고리즘: AES
+        * 블록 암호화 운영 코드: CBC
+        * 패딩: PKCS5Padding
+        */
+
+        
+
+
+    
+        
+      }
+    
+    }
+    ```
+
+
+
+
+
+
