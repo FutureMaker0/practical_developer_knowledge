@@ -66,7 +66,7 @@
     public class AESEncryption {
 
       private SecretKeySpec secretKey;
-      private byte[] initialVetor;
+      private byte[] initVetor;
 
       // 대칭키 암호화 메서드
       public String encrypt(String plainText, String secretString) throws Exception {
@@ -83,19 +83,19 @@
         secretKey = new SecretKeySpec(sha256, "AES");
 
         // 첫 번째 블록 암호화를 위해 난수(Random) 값을 이용하여 초기화 벡터 생성
-        initialVector = new byte[16];
+        initVector = new byte[16];
         SecureRandom secureRandom = new SecureRandom();
-        secureRandom.nextBytes(initialvector);
+        secureRandom.nextBytes(initvector);
 
         /* 암호화 객체 생성
         * 암호화 알고리즘: AES
         * 블록 암호화 운영 코드: CBC
         * 패딩: PKCS5Padding
         */
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
 
         // 생성된 암호화 객체 초기화 - 암호화 모드, 대칭 키, 초기화 벡터 값 사용
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(initialVector));
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(initVector));
 
         // 원본 데이터 최종 암호화
         cipherText = cipher.doFinal(plainText, getBytes("UTF_8"));
@@ -103,11 +103,46 @@
         return Base64.getEncoder().encodeToString(cipherText);
       }
 
-      
+      // 대칭키 복호화 메서드
+      public String decrypt(String cypherText, SecretKeySpec secretKey) throws Exception {
+        byte[] plainText = null;
+
+        // 암호화 객체 생성
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+          
+        /*
+        * 암호화 모드, 대칭키, 초기화 벡터 값을 사용하여 암호화 객체 초기화
+        * secretKey(대칭키)와 initVector(초기화 벡터)는 encrypt에 사용한 값과 동일하게 설정
+        */
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(initVector));
+
+        // 암호화 데이터 최종 복호화
+        plainText = cipher.doFinal(Base64.getDecoder(), decode(cipherText));
+
+        // byte > String 으로 형식 변환 후 반환
+        return new String(plainText);
+      }
+
+      // 대칭 키 반환 메서드
+      public SecretKeySpec getSecretKey() {
+        return secretKey;
+      }
     
     }
     ```
-
+    - secretKey를 이용하여 평문을 암호문을 변환하는 전체 로직
+      1. 암호화에 사용할 비밀키를 만든다.
+      2. 비밀키, 암호 알고리즘 AES.. 등을 매개변수로 하여 secretKey 객체를 생성한다.
+      3. 암호화 객체를 생성한다.(암호화 알고리즘/운용 모드/패딩 방식)
+        - 운용 모드(ECB, CBC 등)
+          - ECB(Electronic Code Book): 데이터를 블록으로 나눈 후 각각 암호화
+          - CBC(Cipher Block-Chaining): 데이터를 블록으로 나누고 블록 간 체인을 만들어 암호화. 이전 블록의 암호화 결과를 다음 블록의 암호화에 사용하므로 '체인'이라 한다.
+        - 패딩 방식: 블록 암호화 방식을 사용할 때 각 블록의 크기가 모두 동일하게 하기 위해 사용. 16바이트 블록의 경우, 모자라는 블록이 있으면 크기를 맞추기 위해 임의의 값을
+          추가하는데 이를 패딩이라 한다.
+          - PKCS#5: 패딩 값을 최대 8바이트까지 채운다.
+          - PKCS#7: 패딩 값을 최대 255바이트까지 채운다. 근래 대부분의 대칭키 암호 알고리즘 블록 크기는 16바이트 이상이므로 이를 많이 사용한다.
+      4. 최종 암호화 한다. plainText의 문자열을 바이트 값으로 변환하여 최종 암호화하고, Base64 형식으로 인코딩하여 최종 반환한다.
+      | ㅇㅇㅇ
 
 
 
