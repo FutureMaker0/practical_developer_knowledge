@@ -22,30 +22,30 @@
 - 클라이언트 입력값이 필터링 과정 없이 그대로 SQL 쿼리문에 사용되는 코드는 언제나 취약하다. 공격 문자열이 SQL 문장에 삽입되어 문장 구조를 변경해버릴 수 있기 때문이다.
 
 ### 공격 문자열에 취약한 코드
-```java
-String username = request.getParameter("user");
-String password = request.getParameter("password");
-
-Statement sm = conn.createStatement();
-
-ResultSet result = sm.executeQuery("select count(*) from members where user='"+user+"' and password='"+password+"'");
-```
+  ```java
+  String username = request.getParameter("user");
+  String password = request.getParameter("password");
+  
+  Statement sm = conn.createStatement();
+  
+  ResultSet result = sm.executeQuery("select count(*) from members where user='"+user+"' and password='"+password+"'");
+  ```
 
 ### 취약점을 보완한 시큐어 코딩 코드
-```java
-String username = request.getParameter("user");
-String password = request.getParameter("password");
-
-PreparedStatement psm = conn.createStatement(SecureQuery);
-String SecureQuery = "select count(*) from members where user=? and password=?";
-
-psm.setString(1, user);
-psm.setString(2, password);
-
-ResultSet rs = psm.executeQuery();
-```
-- 상기와 같이, PreparedStatement를 사용한 코드를 통해 안전성을 확보할 수 있다. 이를 사용하면, 쿼리문을 미리 컴파일하여 실행 계획을 캐시에 저장해놓기 때문에 이후 조작된
-  공격 문자열을 통해 쿼리문의 구조를 바꿀 수 없게 된다. 다시 말해, 동일한 구조지만 공격 문자열이 탑재된 쿼리문이 들어왔을 때 다시 컴파일하는 것이 아니라 캐시에 저장된 실행 계획을
-  사용하기 때문에 SQL 문장이 변경될 일이 없게 되는 것이다.
-- 이와 같이, SQL Injection 공격에 안전한 시큐어 코딩은 매우 중요하다.
+  ```java
+  String username = request.getParameter("user");
+  String password = request.getParameter("password");
+  
+  PreparedStatement psm = conn.createStatement(SecureQuery);
+  String SecureQuery = "select count(*) from members where user=? and password=?";
+  
+  psm.setString(1, user);
+  psm.setString(2, password);
+  
+  ResultSet rs = psm.executeQuery();
+  ```
+  - 상기와 같이, PreparedStatement를 사용한 코드를 통해 안전성을 확보할 수 있다. 이를 사용하면, 쿼리문을 미리 컴파일하여 실행 계획을 캐시에 저장해놓기 때문에 이후 조작된
+    공격 문자열을 통해 쿼리문의 구조를 바꿀 수 없게 된다. 다시 말해, 동일한 구조지만 공격 문자열이 탑재된 쿼리문이 들어왔을 때 다시 컴파일하는 것이 아니라 캐시에 저장된 실행 계획을
+    사용하기 때문에 SQL 문장이 변경될 일이 없게 되는 것이다.
+  - 이와 같이, SQL Injection 공격에 안전한 시큐어 코딩은 매우 중요하다.
 
