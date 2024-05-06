@@ -98,7 +98,7 @@
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(initialVector));
 
         // 원본 데이터 최종 암호화
-        cipherText = cipher.doFinal(plainText, getBytes("UTF_8));
+        cipherText = cipher.doFinal(plainText, getBytes("UTF_8"));
         // Base64로 Encoding하여 암호문 반환
         return Base64.getEncoder().encodeToString(cipherText);
       }
