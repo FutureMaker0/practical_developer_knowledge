@@ -92,13 +92,18 @@
         * 블록 암호화 운영 코드: CBC
         * 패딩: PKCS5Padding
         */
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Paiidng)
 
-        
+        // 생성된 암호화 객체 초기화 - 암호화 모드, 대칭 키, 초기화 벡터 값 사용
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(initialVector));
 
-
-    
-        
+        // 원본 데이터 최종 암호화
+        cipherText = cipher.doFinal(plainText, getBytes("UTF_8));
+        // Base64로 Encoding하여 암호문 반환
+        return Base64.getEncoder().encodeToString(cipherText);
       }
+
+      
     
     }
     ```
