@@ -76,7 +76,7 @@
         byte[] cipherText = null;
 
         // secretString에 대한 hash value 생성
-        sha256 = MessageDigest.getInstance("SHA-256").digest(secretString.getBytes("UTF-8));
+        sha256 = MessageDigest.getInstance("SHA-256").digest(secretString.getBytes("UTF-8"));
         // 해시 값을 16바이트(128비트) 배열에 나누어 저장
         sha256 = Arrays.copyOf(sha256, 16);
         // 저장된 해시 값을 AES 알고리즘을 이용하여 secret key 생성
