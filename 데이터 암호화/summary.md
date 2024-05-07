@@ -173,16 +173,88 @@
 |키 교환|어려움|쉬움|
 |사용 목적|데이터 암호화|전자서명, 키 교환, 인증|
 
+#### 비대칭 키 암호 알고리즘 자바 코드
+  ```java
+  import javax.crypto.Cipher;
+  import java.security.KeyPair;
+  import java.security.KeyPairGenerator;
+  import java.security.NoSuchAlgorithmException;
+  import java.security.PrivateKey;
+  import java.security.PublicKey;
+  import java.util.Base64;
 
+  public class RSAEncryption {
 
+    private PrivateKey privateKey = null;
+    private PublicKey publicKey = null;
 
+    public RSAEncryption() {
+      this.makeKey();
+    }
 
+    // 비대칭 키 생성 메서드
+    public KeyPair makeKey() {
 
+      KeyPairGenerator keyPairGenerator = null;
+      KeyPair keyPair = null;
 
+      try {
+        // 1. 비대칭 키 생성을 위한 객체 생성
+        keyPairGenerator = KeyPairGenerator.getInstance("RSA");
 
+        // 2. RSA 알고리즘에서 사용할 비트수 결정
+        keyPairGenerator.initialize(2048);
 
+        // 3. 비대칭 키 한 쌍(공개 키, 비밀 키) 생성
+        keyPair = keyPairGenerator.generateKeyPair();
 
+        // 4. 비밀 키 변수 할당
+        privateKey = keyPair.getPrivate();
+        // 5. 공개 키 변수 할당
+        publicKey = keyPair.getPublic();
 
+        } catch (NoSuchAlgorithmException e) {
+          e.printStackTrace();
+      }
+      return KeyPair;
+    }
+
+    // 암호화 함수
+    public String encrypt(String plainText) throws Exception {
+      byte[] cipherText = null;
+
+      // 1. 암호화 객체 생성
+      Cipher cipher = Cipher.getInstance("RSA");
+
+      // 2. 암호화 모드, 공개 키를 입력하여 암호화 객체를 초기화
+      cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+
+      // 3. 데이터 암호화
+      cipherText = cipher.doFinal(plainText.getBytes());
+
+      // 4. Base64 인코딩 및 최종 암호문 반환
+      return Base64.getEncoder().encodeToString(cipherText);
+    }
+
+    // 복호화 함수
+    public String decrypt(String cipherText) throws Exception {
+      byte[] plainText = null;
+
+      // 1. 암호화 객체 생성
+      Cipher cipher = Cipher.getInstance("RSA");
+
+      // 2. 복호화 모드, 비밀 키를 통한 암호화 객체 초기화
+      cipher.init(Cipher.DECRYPT_MODE, privateKey);
+
+      // 3. 데이터 복호화
+      plainText = new String(cipher.doFinal(Base64.getEncoder().encodeToString(cipherText)));
+
+      // 4. 최종 평문 반환
+      return plainText;
+    }
+
+  }
+  ```
 
 
 
