@@ -11,5 +11,5 @@
 
   Copyright © 2024 김현정, 이재효 & Hanbit Media, Inc.
   ```
-- <img width="400" alt="" src="https://github.com/FutureMaker0/practical_developer_knowledge/assets/120623320/bd4ecee2-35c1-4cce-a6f6-dfba00732bb4">
+  <img width="200" alt="" src="https://github.com/FutureMaker0/practical_developer_knowledge/assets/120623320/bd4ecee2-35c1-4cce-a6f6-dfba00732bb4">
 
