@@ -54,7 +54,7 @@
      2) no-cache: max-age=0과 유사하게 동작한다. 파일을 캐시하지만 항상 캐시 파일의 최신 여부를 확인해달라는 요청을 웹서버로 보낸다.
      3) no-store: 파일을 아예 캐싱하지 않는 옵션. 이 옵션을 통해, 보안이 필요한 중요한 파일의 경우 아예 캐시에 저장하지 않도록 할 수 있다.
 
-## 클라우드 서비스의 Auto-Scaling
+## 클라우드 서비스(컴퓨팅)
   - 클라우드 서비스(컴퓨팅)의 국제 표준 정의(ISO/IEC22123-1)
     ```text
     paradigm for enabling network access to a scalabe and elastic pool of shareable physical or virtual resources with self-service
@@ -64,7 +64,14 @@
     - 핵심 키워드: 'sharable physical or virtual resuorces', 'self-service: 간편한 버튼클릭', 'scalable and elastic: 탄력적이고 빠른 자원 확장'
     - 가상화한 컴퓨팅 자원을 공유 풀의 형태로 사용자에게 제공하는 것
     - 서버 자원을 대여하고 사용한 만큼 요금을 지불하는 것
+   
+### 클라우드 컴퓨팅의 탄력성(elastic)
+  - 확장성: 시스템이 성능 요구사항에 맞게 능력을 키울 수 있는 정도.
+    - 스케일 업: 하나의 서버를 크기를 키우는 것, 단일 하드웨어에 시스템 자원(CPU, 메모리, Disk 등)을 추가하거나 사양이 높은 장비로 교체하는 것(수직 확장)
+    - 스케일 아웃: 서버를 여러 대 추가하여 처리 능력을 향상시키는 것(수평 확장)
+  - 탄력성: self-service 버튼 클릭만으로 자원 추가가 가능한 클라우드 서비스에서는 시스템 부하량에 따라 자원을 동적으로 할당하고 활용한다. 사용자 트래픽이 증가하면 자원을 빠르게
+    추가하고, 감소하면 해제하여 탄력적으로 운용한다. 서비스 탄력성으로 비용 절감까지 이뤄낼 수 있다.
 
-
-
+### 오토 스케일링(Auto-Scaling)
+  - 
 
