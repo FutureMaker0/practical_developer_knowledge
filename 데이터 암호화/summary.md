@@ -269,7 +269,8 @@
     - IaaS(Infra as a Service): 인프라를 대여
 
 ### 클라우드 서비스를 사용할 때의 공유 책임 모델
-
+  <img src="https://github.com/FutureMaker0/designPattern_singleton/assets/120623320/f0484b56-d23e-4648-a56b-67105284ca8e">
+  출저 - aws.amazon.com
 
 
 
