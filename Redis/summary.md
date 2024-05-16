@@ -48,13 +48,13 @@
   - 캐시와 세션은 유사해 보이지만 데이터를 읽고 쓰는 패턴에서 차이점이 있다.
   - 레디스를 캐시와 세션 저장소로 사용할 떄의 차이점 비교
     - 캐시
-      - <img width="500" src="https://github.com/FutureMaker0/practical_developer_knowledge/assets/120623320/f4bf046d-3efe-4a8a-8817-0201530186c0">
+      <img width="500" src="https://github.com/FutureMaker0/practical_developer_knowledge/assets/120623320/f4bf046d-3efe-4a8a-8817-0201530186c0">
       - 캐시는 원본 데이터베이스의 완벽한 subset으로 동작한다.
       - 즉, 캐시가 갖고 있는 데이터는 모두 원본 데이터베이스에 저장되어 있고, 캐시 내부 데이터가 유실되더라도 데이터베이스에서 데이터를 다시 가져올 수 있다.
       - 또한, 캐시에 저장된 데이터는 여러 애플리케이션에서 함께 사용할 수가 있으며 그럴수록 더욱 효율적이다.
    
     - 세션 (스토어)
-      - <img width="500" src="https://github.com/FutureMaker0/practical_developer_knowledge/assets/120623320/4051ad8d-995f-44e4-8e8b-af4b60168ec3">
+      <img width="500" src="https://github.com/FutureMaker0/practical_developer_knowledge/assets/120623320/4051ad8d-995f-44e4-8e8b-af4b60168ec3">
       - 세션 스토어에 저장된 데이터는 여러 사용자 간 공유되지 않으며, 특정 사용자 ID에 한해 유효하다.
       - 일반적인 세션 스토어에서는 유저가 로그인 한 뒤 세션 데이터가 세션 스토어에 저장된다. 유저가 로그인한 동안(즉, 세션이 활성화 되어있는 동안)에는 애플리케이션은 유저 데이터를 원본 데이터베이스가 아닌 세션 스토어에만 유일하게 저장한다.
       - 예를 들어, 유저가 최근 봤던 상품, 장바구니에 담은 상품 데이터 등은 세션 스토어에만 저장된다는 것이다.
